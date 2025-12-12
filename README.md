@@ -29,6 +29,8 @@ This is a web-based application built using **Angular** for the frontend, design
 
 ---
 
+## Project Structure
+
 src/
 
 ├── app/
@@ -49,5 +51,4 @@ src/
 
 
 
-## Project Structure
 
