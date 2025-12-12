@@ -30,12 +30,19 @@ This is a web-based application built using **Angular** for the frontend, design
 ---
 
 src/
+
 ├── app/
+
 │ ├── components/ # Angular components
+
 │ ├── services/ # HTTP services for API calls
+
 │ ├── pages/ # All pages like login, signup, dashboard
+
 │ ├── interceptors/ # HTTP interceptors for authentication
+
 │ ├── app-routing.module.ts
+
 │ └── app.module.ts
 
 ---
