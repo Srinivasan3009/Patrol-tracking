@@ -1,0 +1,241 @@
+<div class="navi">
+    <h2 > Assignments</h2>
+    
+<button (click)="openAssignPopup()">Assign Task</button>
+
+    <img src="/assets/plus.png" (click)="showForm = true"class="clickable-image" *ngIf="!showForm" >
+</div>
+<div  class="table-container">
+  <h3>Assignment List</h3>
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>Workflow no</th>
+        <th>Workflow Name</th>
+        <th>description</th>
+        <th>status</th>
+        <th>start</th>
+        <th>end</th>
+        <th>createdby</th>
+        <th>modifiedby</th>
+        <th>modifieddate</th>
+        <th>active</th>
+        <th style="padding: 10px 50px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let w of wf; let i = index">
+      <tr *ngIf="wf.length === 0">
+      <td colspan="11">No users added yet.</td>
+    </tr>
+      <tr >
+        <td>{{ w.wfid }}<button (click)="toggleTasks(w.wfid)">
+      {{ showTasks[w.wfid] ? 'Hide Tasks' : 'Show Tasks' }}
+    </button></td>
+        <td>{{ w.wftitle }}</td>
+        <td>{{ w.description }}</td>
+        <td>{{ w.status }}</td>
+        <td>{{ w.start }}</td>
+        <td>{{ w.end }}</td>
+        <td>{{ w.createdby }}</td>
+        <td>{{ w.modifiedby }}</td>
+        <td>{{ w.modifieddate }}</td>
+        <td>{{ w.active }}</td>
+        <td class="up">
+          <button (click)="editUser(i)" class="update-btn">Update</button>
+          <button (click)="removeUser(i)" class="remove-btn">Remove</button>
+          <button (click)="Addtask(i)" class="add-btn">Add Task</button>
+        </td>
+      </tr>
+      <tr *ngIf="showTasks && showTasks[w.wfid]">
+  <td colspan="11">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Task ID</th>
+          <th>Task Title</th>
+          <th>Remarks</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Assigned To</th>
+          <th style="padding: 10px 50px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasksByWorkflow[w.wfid];let i = index">
+          <td>{{ task.taskid }}</td>
+          <td>{{ task.taskname }}</td>
+          <td>{{ task.remarks }}</td>
+          <td>{{ task.start }}</td>
+          <td>{{ task.end }}</td>
+          <td>{{task.assignedto}}</td>
+          <td class="up">
+          <button (click)="editTask(i)" class="update-btn">Update</button>
+          <button (click)="removeTask(i)" class="remove-btn">Remove</button>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="showForm">
+  <div class="login-overlay" (click)="showForm = false"></div>
+  <div class="login-form-container">
+    <h3>Add Workflow</h3>
+    <form [formGroup]="AddForm" (ngSubmit)="onSubmit()">
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" formControlName="title" placeholder="Enter Title"required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form1" formControlName="description" name="description" placeholder="Description">
+      </div>
+      </div>
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="start">Start Time</label>
+        <input type="datetime-local" id="start" formControlName="start" placeholder="Enter start time"required>
+      </div>
+      <div class="form-group">
+        <label for="end">End Time</label>
+        <input type="datetime-local" class="form1" formControlName="end" name="end" placeholder="Enter End time">
+      </div>
+      </div>
+      
+      <div class="form-actions" style="justify-content: flex-end;">
+        <button type="button" (click)="toggleForm()" class="btn-cancel">Cancel</button>
+        <button type="submit"  class="btn-submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="login-overlay" *ngIf="editIndex !== -1">
+  <div class="login-form-container">
+    <h3>Update Workflow</h3>
+    <form [formGroup]="updateForm" (ngSubmit)="Update()">
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" formControlName="wftitle" placeholder="Enter Title">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form1" formControlName="description" name="description" placeholder="Description">
+      </div>
+      </div>
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="start">Start Time</label>
+        <input type="datetime-local" id="start" formControlName="start" placeholder="Enter start time">
+      </div>
+      <div class="form-group">
+        <label for="end">End Time</label>
+        <input type="datetime-local" class="form1" formControlName="end" name="end" placeholder="Enter End time">
+      </div>
+      </div>
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="active">active
+        <input type="checkbox"  formControlName="active" ></label>
+      </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" (click)="CancelEdit()" class="btn-cancel">Cancel</button>
+        <button type="submit" [disabled]="!updateForm.valid" class="btn-submit">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="addIndex !== -1 && showForm">
+  <div class="login-overlay" (click)="showForm = false"></div>
+  <div class="login-form-container">
+    <h3>Add Task</h3>
+    <form [formGroup]="taskForm" (ngSubmit)="submit()">
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="tasktitle">Task Title</label>
+        <input type="text" id="title" formControlName="taskname" placeholder="Enter Title"required>
+      </div>
+      <div class="form-group">
+        <label for="remarks">Remarks</label>
+        <input type="text" class="form1" formControlName="remarks" name="remarks" placeholder="Remarks">
+      </div>
+      </div>
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="start">Start Time</label>
+        <input type="datetime-local" id="start" formControlName="start" placeholder="Enter start time"required>
+      </div>
+      <div class="form-group">
+        <label for="end">End Time</label>
+        <input type="datetime-local" class="form1" formControlName="end" name="end" placeholder="Enter End time">
+      </div>
+      </div>
+      
+      <div class="form-actions" style="justify-content: flex-end;">
+        <button type="button" (click)="toggleForm()" class="btn-cancel">Cancel</button>
+        <button type="submit"  class="btn-submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="login-overlay" *ngIf="taskeditIndex !== -1">
+  <div class="login-form-container">
+    <h3>Update Task</h3>
+    <form [formGroup]="taskupdateForm" (ngSubmit)="UpdateTask()">
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="taskname" formControlName="taskname" placeholder="Enter Title">
+      </div>
+      <div class="form-group">
+        <label for="remarks">Remarks</label>
+        <input type="text" class="form1" formControlName="remarks" name="remarks" placeholder="Remarks">
+      </div>
+      </div>
+      <div class="form-actions">
+      <div class="form-group">
+        <label for="start">Start Time</label>
+        <input type="datetime-local" id="start" formControlName="start" placeholder="Enter start time">
+      </div>
+      <div class="form-group">
+        <label for="end">End Time</label>
+        <input type="datetime-local" class="form1" formControlName="end" name="end" placeholder="Enter End time">
+      </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" (click)="CancelEdit()" class="btn-cancel">Cancel</button>
+        <button type="submit"  class="btn-submit">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Assign Task Popup -->
+<div class="login-overlay" *ngIf="showAssignPopup">
+  <div class="login-form-container">
+    <h3>Assign Task</h3>
+<div class="form-actions">
+    <label for="task">Select Task:</label>
+    <select id="task" [(ngModel)]="selectedTaskId">
+      <option *ngFor="let task of allTasks" [value]="task.taskid">
+        {{ task.taskname }}
+      </option>
+    </select>
+
+    <label for="user">Select User:</label>
+    <select id="user" [(ngModel)]="selectedUsername">
+      <option *ngFor="let user of users" [value]="user.name">
+        {{ user.name }} 
+      </option>
+    </select>
+</div>
+    <div class="form-actions">
+      <button (click)="confirmAssign()">Assign</button>
+      <button (click)="cancelAssign()">Cancel</button>
+    </div>
+  </div>
+</div>

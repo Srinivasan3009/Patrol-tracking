@@ -1,0 +1,120 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.username{
+  font-size: large;
+}
+.top-nav {
+  background-color: #651ee8;
+  color: white;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.main-body {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  background-color: #651ee8;
+  color: white;
+  width: 60px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  padding-top: 10px;
+}
+
+.sidebar.expanded {
+  width: 200px;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  cursor: pointer;
+}
+
+
+.icon {
+  font-size: 20px;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #ecf0f1;
+  overflow-y: auto;
+}
+.user-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  float: right;
+  margin: 10px;
+}
+
+.profile-popup {
+  position: absolute;
+  right: 10px;
+  top: 60px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  width: 200px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+.logout-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.active {
+  background-color: #1976d2;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+}

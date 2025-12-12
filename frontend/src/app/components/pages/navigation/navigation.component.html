@@ -1,0 +1,51 @@
+<div class="dashboard-container">
+  <div class="top-nav">
+    <div class="username">Welcome,{{this.name}} </div>
+    <div class="nav-actions">
+      <button class="icon-btn">🔔</button>
+      <img src="/assets/account.png"  style="width: 30px;height:30px;" (click)="toggleProfile()">
+    </div>
+  </div>
+  <div class="profile-popup" *ngIf="showProfile">
+  <p><strong>Username:</strong> {{this.name }}</p>
+  <button class="logout-btn" (click)="logout()">Logout</button>
+</div>
+
+  <div class="main-body">
+    <div class="sidebar" [class.expanded]="sidebarExpanded">
+      <button class="hamburger" (click)="toggleSidebar()">☰</button>
+
+      <div class="sidebar-item" routerLink="dashboard" routerLinkActive="active">
+        <img src="/assets/dashboard.png" style="width: 30px;height:30px;">
+        <span class="label" *ngIf="sidebarExpanded">Dashboard</span>
+      </div>
+
+       <div class="sidebar-item" routerLink="events" routerLinkActive="active">
+        <img src="/assets/events.png" style="width: 30px;height:30px;">
+        <span class="label" *ngIf="sidebarExpanded">Events</span>
+      </div>
+
+      <div class="sidebar-item" routerLink="reports" routerLinkActive="active">
+        <img src="/assets/result.png" style="width: 30px;height:30px;">
+        <span class="label" *ngIf="sidebarExpanded">Reports</span>
+      </div>
+      <div class="sidebar-item" routerLink="insights" routerLinkActive="active">
+        <img src="/assets/insights.png" style="width: 30px;height:30px;">
+        <span class="label" *ngIf="sidebarExpanded">Insights</span>
+      </div>
+      <div class="sidebar-item" routerLink="usermanagement" routerLinkActive="active">
+        <img src="/assets/user.png" style="width: 30px;height:30px;">
+        <span class="label" *ngIf="sidebarExpanded">User Management</span>
+      </div>
+      <div class="sidebar-item" routerLink="patroltracking" routerLinkActive="active">
+        <img src="/assets/tracking.png" style="width: 30px;height:30px;">
+        <span class="label" *ngIf="sidebarExpanded">Patrol Tracking</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <app-breadcrumb></app-breadcrumb>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="container">
+    <form class="form">
+        <h2>Signup Here</h2>
+        <input type="text" class="form1" [(ngModel)]="username" name="username" placeholder="UserName">
+        <input type="email" class="form1" [(ngModel)]="email" name="email" placeholder="Email">
+        <input type="password" class="form1" [(ngModel)]="password" name="password" placeholder="Password">
+        <input type="text" class="form1" [(ngModel)]="designation" name="designation" placeholder="Designation">
+        <input type="text" class="form1" [(ngModel)]="department" name="department" placeholder="department">
+        <input type="number" class="form1" [(ngModel)]="mobilenumber" name="mobilenumber" placeholder="Mobile Number">
+        <input type="text" class="form1" [(ngModel)]="rolename" name="rolename" placeholder="Role Name">
+        <button type="submit" (click)="SignUp()">Register</button>
+    </form>
+</div>

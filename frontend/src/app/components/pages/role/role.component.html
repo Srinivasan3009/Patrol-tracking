@@ -1,0 +1,92 @@
+<div class="navi">
+    <h2>Role Management</h2>
+    <img src="/assets/plus.png" (click)="showRoleForm = true"class="clickable-image" *ngIf="!showRoleForm" >
+</div>
+<div class="table-container">
+    <h2> Role List</h2>
+    <table class="role-table">
+        <thead>
+            <tr>
+            <th>Role ID</th>
+            <th>Role Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="roles?.length===0">
+                <td colspan="4">No roles has been added...</td>
+            </tr>
+            <tr *ngFor="let role of roles, let i=index">
+                <td>{{role.roleId}}</td>
+                <td>{{role.roleName}}</td>
+                <td>{{role.description}}</td>
+                <td>
+                    <button (click)="editRole(i)" class="update-btn">Update</button>
+                    <button (click)="removeRole(i)" class="remove-btn">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="showRoleForm">
+<div class="role-overlay" (click)="showRoleForm=false"></div>
+    <div class="role-container">
+        <h3>Add Role</h3>
+        <form [formGroup]="RoleForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="rolename">Role Name</label>
+                <input formControlName="rolename" id="rolename" type="text" placeholder="Enter the role name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input formControlName="description" id="description" type="text" placeholder="Enter description" required>
+            </div>
+            <div class="form-actions">
+            <button type="button" (click)="toggleRoleForm()" class="btn-cancel">
+            Cancel
+            </button>
+            <button type="submit" class="btn-submit">
+            Submit
+            </button>
+        </div>
+        </form>
+    </div>
+</div>
+<div class="role-overlay" *ngIf="editIndex !== -1">
+  <div class="role-container">
+    <h3>Update Role</h3>
+    <form [formGroup]="updateForm" (ngSubmit)="UpdateRole()">
+      <div class="form-group">
+        <label for="edit-rolename">Role Name</label>
+        <input 
+          id="edit-rolename"
+          type="text"
+          formControlName="rolename"
+          placeholder="Enter new Role Name"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="edit-description">Description</label>
+        <input 
+          id="edit-description"
+          type="text"
+          formControlName="description"
+          placeholder="Enter Description"
+          required
+        >
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="CancelEdit()" class="btn-cancel">
+          Cancel
+        </button>
+        <button type="submit"  class="btn-submit">
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
